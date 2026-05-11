@@ -277,6 +277,251 @@
     }
 
     .hg-footer span { color: #3B6D11; }
+
+    .hg-demo-link {
+      display: block;
+      text-align: center;
+      font-size: 13px;
+      color: #3B6D11;
+      text-decoration: underline;
+      cursor: pointer;
+      margin-top: 12px;
+      background: none;
+      border: none;
+      width: 100%;
+      font-family: inherit;
+    }
+
+    .hg-modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 100;
+      align-items: flex-start;
+      justify-content: center;
+      animation: fadeIn 0.2s ease;
+    }
+    .hg-modal-overlay.open { display: flex; }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    .hg-modal {
+      background: #fff;
+      width: 100%;
+      max-width: 390px;
+      min-height: 100vh;
+      overflow-y: auto;
+    }
+
+    .hg-modal-nav {
+      display: flex;
+      align-items: center;
+      padding: 16px 20px;
+      border-bottom: 0.5px solid #e5e5e5;
+    }
+
+    .hg-modal-back {
+      font-size: 20px;
+      cursor: pointer;
+      color: #1a1a1a;
+      background: none;
+      border: none;
+      padding: 0;
+      margin-right: 12px;
+      line-height: 1;
+    }
+
+    .hg-modal-header { padding: 24px 20px 16px; }
+
+    .hg-modal-title {
+      font-size: 20px;
+      font-weight: 500;
+      color: #1a1a1a;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+
+    .hg-modal-sub { font-size: 13px; color: #666; }
+
+    .hg-county-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 500;
+      color: #3B6D11;
+      background: #EAF3DE;
+      padding: 3px 8px;
+      border-radius: 20px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    .hg-job-card {
+      margin: 0 20px 20px;
+      border: 0.5px solid #e5e5e5;
+      border-radius: 12px;
+      padding: 16px;
+    }
+
+    .hg-job-company { font-size: 12px; color: #666; margin-bottom: 4px; }
+    .hg-job-role { font-size: 18px; font-weight: 500; color: #1a1a1a; letter-spacing: -0.4px; margin-bottom: 6px; }
+    .hg-job-meta { font-size: 13px; color: #666; margin-bottom: 4px; }
+    .hg-job-pay { font-size: 15px; font-weight: 500; color: #1a1a1a; margin-bottom: 4px; }
+    .hg-job-type { font-size: 12px; color: #999; margin-bottom: 16px; }
+
+    .hg-skills-label {
+      font-size: 11px;
+      font-weight: 500;
+      color: #bbb;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .hg-skills-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .hg-skill-box {
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 12px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hg-skill-green { background: #EAF3DE; color: #3B6D11; }
+    .hg-skill-gray { background: #f0f0f0; color: #999; cursor: pointer; }
+
+    .hg-apply-btn {
+      width: 100%;
+      padding: 14px;
+      font-size: 15px;
+      font-weight: 500;
+      background: #ccc;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: not-allowed;
+      letter-spacing: -0.2px;
+    }
+
+    .hg-apply-note {
+      font-size: 12px;
+      color: #999;
+      text-align: center;
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+
+    .hg-teacher-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 200;
+      align-items: flex-end;
+      justify-content: center;
+      animation: fadeIn 0.2s ease;
+    }
+    .hg-teacher-overlay.open { display: flex; }
+
+    .hg-teacher-popup {
+      background: #fff;
+      width: 100%;
+      max-width: 390px;
+      border-radius: 16px 16px 0 0;
+      padding: 20px;
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+
+    .hg-teacher-header { display: flex; justify-content: flex-end; margin-bottom: 16px; }
+
+    .hg-teacher-close {
+      font-size: 22px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #666;
+      line-height: 1;
+    }
+
+    .hg-teacher-profile { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 16px; }
+
+    .hg-avatar {
+      width: 52px;
+      height: 52px;
+      min-width: 52px;
+      border-radius: 50%;
+      background: #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 500;
+      color: #666;
+    }
+
+    .hg-teacher-name { font-size: 16px; font-weight: 500; color: #1a1a1a; margin-bottom: 2px; }
+    .hg-teacher-title { font-size: 13px; color: #666; margin-bottom: 2px; }
+    .hg-teacher-loc { font-size: 12px; color: #999; }
+
+    .hg-teacher-bio { font-size: 13px; color: #666; line-height: 1.6; margin-bottom: 14px; }
+
+    .hg-teacher-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+
+    .hg-pill {
+      font-size: 12px;
+      font-weight: 500;
+      color: #3B6D11;
+      background: #EAF3DE;
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    .hg-message-label { font-size: 13px; font-weight: 500; color: #1a1a1a; margin-bottom: 8px; }
+
+    .hg-message-input {
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 13px;
+      border: 0.5px solid #ddd;
+      border-radius: 8px;
+      color: #1a1a1a;
+      resize: none;
+      height: 80px;
+      font-family: inherit;
+      outline: none;
+      margin-bottom: 10px;
+    }
+    .hg-message-input:focus { border-color: #3B6D11; }
+
+    .hg-send-btn {
+      width: 100%;
+      padding: 13px;
+      font-size: 14px;
+      font-weight: 500;
+      background: #3B6D11;
+      color: #EAF3DE;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .hg-send-btn:disabled { background: #ccc; cursor: not-allowed; }
+
+    .hg-confirm-msg {
+      font-size: 13px;
+      color: #3B6D11;
+      text-align: center;
+      margin-top: 10px;
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -308,6 +553,7 @@
       <button class="hg-btn-primary">Create student account</button>
       <div class="hg-divider">Already have an account?</div>
       <button class="hg-btn-secondary">Sign in</button>
+      <button class="hg-demo-link" onclick="openDemo()">Try Demo</button>
     </div>
 
     <div id="employer-section" style="display:none;">
@@ -320,6 +566,7 @@
       <button class="hg-btn-primary">Get early employer access</button>
       <div class="hg-divider">Already have an account?</div>
       <button class="hg-btn-secondary">Sign in</button>
+      <button class="hg-demo-link" onclick="openDemo()">Try Demo</button>
     </div>
   </div>
 
@@ -415,7 +662,93 @@
 
 </div>
 
+<!-- Demo Modal -->
+<div class="hg-modal-overlay" id="demo-overlay">
+  <div class="hg-modal">
+    <div class="hg-modal-nav">
+      <button class="hg-modal-back" onclick="closeDemo()">←</button>
+      <div class="hg-logo">home<span style="color:#3B6D11">grown</span>.ai</div>
+    </div>
+    <div class="hg-modal-header">
+      <div class="hg-modal-title">Available in your area <span class="hg-county-badge">Chenango County</span></div>
+      <div class="hg-modal-sub">23 students in your program have viewed these roles</div>
+    </div>
+    <div class="hg-job-card">
+      <div class="hg-job-company">Raymond Corporation</div>
+      <div class="hg-job-role">Mechanical Assembler</div>
+      <div class="hg-job-meta">📍 Greene, NY</div>
+      <div class="hg-job-pay">$22–$26/hr</div>
+      <div class="hg-job-type">Full-time · First shift available</div>
+
+      <div class="hg-skills-label">Skills required</div>
+      <div class="hg-skills-grid">
+        <div class="hg-skill-box hg-skill-green">✓ OSHA 10 Certification</div>
+        <div class="hg-skill-box hg-skill-green">✓ Blueprint Reading</div>
+        <div class="hg-skill-box hg-skill-green">✓ Hand Tool Proficiency</div>
+        <div class="hg-skill-box hg-skill-gray" onclick="openTeacher('Industrial Wiring')">+ Industrial Wiring</div>
+        <div class="hg-skill-box hg-skill-gray" onclick="openTeacher('Hydraulic Systems')">+ Hydraulic Systems</div>
+        <div class="hg-skill-box hg-skill-gray" onclick="openTeacher('CNC Machine Operation')">+ CNC Machine Operation</div>
+      </div>
+
+      <button class="hg-apply-btn">Complete skills to apply</button>
+      <div class="hg-apply-note">You're missing 3 skills. Tap any gray skill to connect with an instructor.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Teacher Popup -->
+<div class="hg-teacher-overlay" id="teacher-overlay">
+  <div class="hg-teacher-popup">
+    <div class="hg-teacher-header">
+      <button class="hg-teacher-close" onclick="closeTeacher()">×</button>
+    </div>
+    <div class="hg-teacher-profile">
+      <div class="hg-avatar">JM</div>
+      <div>
+        <div class="hg-teacher-name">James Moretti</div>
+        <div class="hg-teacher-title">Electrical & Industrial Systems Instructor</div>
+        <div class="hg-teacher-loc">DCMO BOCES · Norwich, NY</div>
+      </div>
+    </div>
+    <div class="hg-teacher-bio">20 years in industrial manufacturing before joining BOCES. I help students get hands-on experience before they enter the workforce.</div>
+    <div class="hg-teacher-pills">
+      <span class="hg-pill">12 yrs teaching</span>
+      <span class="hg-pill">OSHA Certified</span>
+      <span class="hg-pill">Open to students</span>
+    </div>
+    <div class="hg-message-label">Send a message</div>
+    <textarea class="hg-message-input" id="message-input" placeholder="Hi James, I'm a junior in the electrical program and I'd love to get some experience with industrial wiring — would you be open to a quick conversation?"></textarea>
+    <button class="hg-send-btn" id="send-btn" onclick="sendMessage()">Send message</button>
+    <div class="hg-confirm-msg" id="send-confirm">Message sent! James typically replies within 24 hours.</div>
+  </div>
+</div>
+
 <script>
+  function openDemo() {
+    document.getElementById('demo-overlay').classList.add('open');
+  }
+
+  function closeDemo() {
+    document.getElementById('demo-overlay').classList.remove('open');
+  }
+
+  function openTeacher(skill) {
+    document.getElementById('teacher-overlay').classList.add('open');
+  }
+
+  function closeTeacher() {
+    document.getElementById('teacher-overlay').classList.remove('open');
+  }
+
+  function sendMessage() {
+    const btn = document.getElementById('send-btn');
+    const input = document.getElementById('message-input');
+    const confirm = document.getElementById('send-confirm');
+    btn.disabled = true;
+    input.disabled = true;
+    confirm.style.display = 'block';
+  }
+
   function switchMode(mode) {
     const studentSection = document.getElementById('student-section');
     const employerSection = document.getElementById('employer-section');
