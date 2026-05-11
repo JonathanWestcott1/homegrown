@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Homegrown.ai — Local talent. Local opportunity.</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #ffffff;
+      color: #1a1a1a;
+      min-height: 100vh;
+    }
+
+    .hg-wrap {
+      max-width: 390px;
+      margin: 0 auto;
+      background: #ffffff;
+      min-height: 100vh;
+    }
+
+    .hg-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      border-bottom: 0.5px solid #e5e5e5;
+    }
+
+    .hg-logo {
+      font-size: 18px;
+      font-weight: 500;
+      color: #1a1a1a;
+      letter-spacing: -0.5px;
+    }
+
+    .hg-logo span { color: #3B6D11; }
+
+    .hg-nav-tag {
+      font-size: 12px;
+      color: #999;
+    }
+
+    .hg-hero {
+      padding: 40px 20px 32px;
+      text-align: left;
+    }
+
+    .hg-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 500;
+      color: #3B6D11;
+      background: #EAF3DE;
+      padding: 4px 10px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      letter-spacing: 0.3px;
+    }
+
+    .hg-headline {
+      font-size: 30px;
+      font-weight: 500;
+      color: #1a1a1a;
+      line-height: 1.2;
+      letter-spacing: -0.8px;
+      margin-bottom: 14px;
+    }
+
+    .hg-headline em {
+      font-style: normal;
+      color: #3B6D11;
+    }
+
+    .hg-sub {
+      font-size: 15px;
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+
+    .hg-toggle {
+      display: flex;
+      background: #f5f5f5;
+      border-radius: 12px;
+      padding: 4px;
+      margin-bottom: 16px;
+      border: 0.5px solid #e5e5e5;
+    }
+
+    .hg-toggle-btn {
+      flex: 1;
+      padding: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      border: none;
+      background: transparent;
+      color: #999;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .hg-toggle-btn.active {
+      background: #ffffff;
+      color: #1a1a1a;
+      border: 0.5px solid #ddd;
+    }
+
+    .hg-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .hg-form input {
+      padding: 12px 14px;
+      font-size: 15px;
+      border: 0.5px solid #ddd;
+      border-radius: 8px;
+      background: #ffffff;
+      color: #1a1a1a;
+      width: 100%;
+      outline: none;
+    }
+
+    .hg-form input::placeholder { color: #bbb; }
+    .hg-form input:focus { border-color: #3B6D11; }
+
+    .hg-btn-primary {
+      width: 100%;
+      padding: 14px;
+      font-size: 15px;
+      font-weight: 500;
+      background: #3B6D11;
+      color: #EAF3DE;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      letter-spacing: -0.2px;
+    }
+
+    .hg-btn-primary:hover { background: #2f5a0e; }
+
+    .hg-divider {
+      text-align: center;
+      font-size: 12px;
+      color: #bbb;
+      margin: 10px 0;
+    }
+
+    .hg-btn-secondary {
+      width: 100%;
+      padding: 13px;
+      font-size: 14px;
+      font-weight: 500;
+      background: transparent;
+      color: #1a1a1a;
+      border: 0.5px solid #ddd;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .hg-btn-secondary:hover { background: #f5f5f5; }
+
+    .hg-section {
+      padding: 32px 20px;
+      border-top: 0.5px solid #e5e5e5;
+    }
+
+    .hg-section-label {
+      font-size: 11px;
+      font-weight: 500;
+      color: #bbb;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .hg-stat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .hg-stat {
+      background: #f5f5f5;
+      border-radius: 8px;
+      padding: 14px;
+    }
+
+    .hg-stat-num {
+      font-size: 22px;
+      font-weight: 500;
+      color: #1a1a1a;
+      letter-spacing: -0.5px;
+      margin-bottom: 2px;
+    }
+
+    .hg-stat-label {
+      font-size: 12px;
+      color: #666;
+      line-height: 1.3;
+    }
+
+    .hg-feature-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .hg-feature {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .hg-feature-icon {
+      width: 32px;
+      height: 32px;
+      min-width: 32px;
+      border-radius: 8px;
+      background: #EAF3DE;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+    }
+
+    .hg-feature-text h4 {
+      font-size: 14px;
+      font-weight: 500;
+      color: #1a1a1a;
+      margin-bottom: 2px;
+    }
+
+    .hg-feature-text p {
+      font-size: 13px;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    .hg-testimonial {
+      background: #f5f5f5;
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 20px;
+    }
+
+    .hg-testimonial p {
+      font-size: 13px;
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 10px;
+      font-style: italic;
+    }
+
+    .hg-testimonial-author {
+      font-size: 12px;
+      font-weight: 500;
+      color: #1a1a1a;
+    }
+
+    .hg-footer {
+      padding: 20px;
+      text-align: center;
+      border-top: 0.5px solid #e5e5e5;
+    }
+
+    .hg-footer p {
+      font-size: 12px;
+      color: #bbb;
+    }
+
+    .hg-footer span { color: #3B6D11; }
+  </style>
+</head>
+<body>
+
+<div class="hg-wrap">
+
+  <nav class="hg-nav">
+    <div class="hg-logo">home<span>grown</span>.ai</div>
+    <div class="hg-nav-tag">Beta</div>
+  </nav>
+
+  <div class="hg-hero">
+    <div class="hg-badge">Built for rural communities</div>
+    <h1 class="hg-headline">Your path to a <em>local career</em> starts here</h1>
+    <p class="hg-sub">See exactly what local employers need, what roles pay, and how your BOCES training connects to real jobs in your county.</p>
+
+    <div class="hg-toggle">
+      <button class="hg-toggle-btn active" id="btn-student" onclick="switchMode('student')">I'm a student</button>
+      <button class="hg-toggle-btn" id="btn-employer" onclick="switchMode('employer')">I'm an employer</button>
+    </div>
+
+    <div id="student-section">
+      <div class="hg-form">
+        <input type="text" placeholder="Full name" />
+        <input type="email" placeholder="Email address" />
+        <input type="text" placeholder="Your BOCES program (e.g. Electrical)" />
+        <input type="text" placeholder="Graduation year" />
+      </div>
+      <button class="hg-btn-primary">Create student account</button>
+      <div class="hg-divider">Already have an account?</div>
+      <button class="hg-btn-secondary">Sign in</button>
+    </div>
+
+    <div id="employer-section" style="display:none;">
+      <div class="hg-form">
+        <input type="text" placeholder="Company name" />
+        <input type="email" placeholder="Work email" />
+        <input type="text" placeholder="County (e.g. Chenango)" />
+        <input type="text" placeholder="Industry (e.g. Manufacturing)" />
+      </div>
+      <button class="hg-btn-primary">Get early employer access</button>
+      <div class="hg-divider">Already have an account?</div>
+      <button class="hg-btn-secondary">Sign in</button>
+    </div>
+  </div>
+
+  <div class="hg-section" id="student-features">
+    <div class="hg-section-label">For students</div>
+    <div class="hg-stat-grid">
+      <div class="hg-stat">
+        <div class="hg-stat-num">4,800+</div>
+        <div class="hg-stat-label">Open roles in Chenango County</div>
+      </div>
+      <div class="hg-stat">
+        <div class="hg-stat-num">$28/hr</div>
+        <div class="hg-stat-label">Median electrician wage, year 3</div>
+      </div>
+      <div class="hg-stat">
+        <div class="hg-stat-num">2.1M</div>
+        <div class="hg-stat-label">Skilled trades jobs unfilled by 2030</div>
+      </div>
+      <div class="hg-stat">
+        <div class="hg-stat-num">33%</div>
+        <div class="hg-stat-label">Rise in NY BOCES enrollment since 2018</div>
+      </div>
+    </div>
+    <div class="hg-feature-list">
+      <div class="hg-feature">
+        <div class="hg-feature-icon">📍</div>
+        <div class="hg-feature-text">
+          <h4>Hyperlocal job intelligence</h4>
+          <p>See what employers in your county actually need and what they pay — updated daily by AI agents.</p>
+        </div>
+      </div>
+      <div class="hg-feature">
+        <div class="hg-feature-icon">🛤</div>
+        <div class="hg-feature-text">
+          <h4>Your path, made clear</h4>
+          <p>Know exactly what skills your BOCES program gives you and which local roles you're already qualified for.</p>
+        </div>
+      </div>
+      <div class="hg-feature">
+        <div class="hg-feature-icon">🤝</div>
+        <div class="hg-feature-text">
+          <h4>Direct employer connections</h4>
+          <p>Get matched to employers before graduation — no cold applications, no guessing.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hg-section" id="employer-features" style="display:none;">
+    <div class="hg-section-label">For employers</div>
+    <div class="hg-stat-grid">
+      <div class="hg-stat">
+        <div class="hg-stat-num">50–100</div>
+        <div class="hg-stat-label">Avg open roles at rural manufacturers</div>
+      </div>
+      <div class="hg-stat">
+        <div class="hg-stat-num">$9k</div>
+        <div class="hg-stat-label">Avg cost per hire via staffing agency</div>
+      </div>
+    </div>
+    <div class="hg-feature-list">
+      <div class="hg-feature">
+        <div class="hg-feature-icon">🎯</div>
+        <div class="hg-feature-text">
+          <h4>Reach local talent first</h4>
+          <p>Access BOCES graduates and skilled workers in your county before they're gone — no staffing agency markup.</p>
+        </div>
+      </div>
+      <div class="hg-feature">
+        <div class="hg-feature-icon">⚡</div>
+        <div class="hg-feature-text">
+          <h4>AI-powered matching</h4>
+          <p>Tell our agent what you need. We surface warm candidates from the local talent pipeline automatically.</p>
+        </div>
+      </div>
+      <div class="hg-feature">
+        <div class="hg-feature-icon">📊</div>
+        <div class="hg-feature-text">
+          <h4>Local labor market intelligence</h4>
+          <p>See wage benchmarks, skills availability, and hiring trends specific to your county — not national averages.</p>
+        </div>
+      </div>
+    </div>
+    <div class="hg-testimonial">
+      <p>"We have 50-100 open roles at any given time and no good way to reach local talent. This is exactly what we've needed."</p>
+      <div class="hg-testimonial-author">HR Manager, Rural Manufacturer — Upstate NY</div>
+    </div>
+  </div>
+
+  <div class="hg-footer">
+    <p>Built in Greene, NY. Backed by <span>Harvard</span> & <span>Entropía AI</span>.</p>
+  </div>
+
+</div>
+
+<script>
+  function switchMode(mode) {
+    const studentSection = document.getElementById('student-section');
+    const employerSection = document.getElementById('employer-section');
+    const studentFeatures = document.getElementById('student-features');
+    const employerFeatures = document.getElementById('employer-features');
+    const btnStudent = document.getElementById('btn-student');
+    const btnEmployer = document.getElementById('btn-employer');
+
+    if (mode === 'student') {
+      studentSection.style.display = 'block';
+      employerSection.style.display = 'none';
+      studentFeatures.style.display = 'block';
+      employerFeatures.style.display = 'none';
+      btnStudent.classList.add('active');
+      btnEmployer.classList.remove('active');
+    } else {
+      studentSection.style.display = 'none';
+      employerSection.style.display = 'block';
+      studentFeatures.style.display = 'none';
+      employerFeatures.style.display = 'block';
+      btnStudent.classList.remove('active');
+      btnEmployer.classList.add('active');
+    }
+  }
+</script>
+
+</body>
+</html>
