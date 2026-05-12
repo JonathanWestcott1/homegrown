@@ -523,6 +523,98 @@
       margin-top: 10px;
       display: none;
     }
+
+    /* Progress bar */
+    .hg-progress {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 20px 20px 0;
+      gap: 0;
+    }
+    .hg-progress-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+    }
+    .hg-progress-row {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      justify-content: center;
+    }
+    .hg-progress-circle {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid #ddd;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 600;
+      flex-shrink: 0;
+      z-index: 1;
+    }
+    .hg-progress-circle.done { background: #3B6D11; border-color: #3B6D11; color: #fff; }
+    .hg-progress-circle.current { background: #3B6D11; border-color: #3B6D11; color: #fff; }
+    .hg-progress-line {
+      flex: 1;
+      height: 2px;
+      background: #ddd;
+    }
+    .hg-progress-line.done { background: #3B6D11; }
+    .hg-progress-labels {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 20px 0;
+    }
+    .hg-progress-label {
+      flex: 1;
+      text-align: center;
+      font-size: 11px;
+      color: #999;
+    }
+    .hg-progress-label.current { color: #1a1a1a; font-weight: 600; }
+    .hg-progress-sublabel {
+      display: flex;
+      justify-content: space-between;
+      padding: 2px 20px 16px;
+    }
+    .hg-progress-sublabel span {
+      flex: 1;
+      text-align: center;
+      font-size: 10px;
+      color: #bbb;
+    }
+
+    /* Signing day banner */
+    .hg-signing-banner {
+      margin: 0 20px 12px;
+      background: #EAF3DE;
+      color: #3B6D11;
+      font-size: 12px;
+      border-radius: 8px;
+      padding: 8px 12px;
+      text-align: center;
+    }
+
+    /* Fit pills */
+    .hg-fit-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+    .hg-fit-pill {
+      font-size: 11px;
+      background: #f5f5f5;
+      color: #1a1a1a;
+      padding: 4px 8px;
+      border-radius: 20px;
+    }
   </style>
 </head>
 <body>
@@ -682,25 +774,63 @@
       <div class="hg-modal-title">Available in your area <span class="hg-county-badge">Chenango County</span></div>
       <div class="hg-modal-sub">23 students in your program have viewed these roles</div>
     </div>
+
+    <div class="hg-signing-banner">🎓 17 students in your region already have jobs lined up for graduation day</div>
+
+    <div class="hg-progress">
+      <div class="hg-progress-step">
+        <div class="hg-progress-row">
+          <div class="hg-progress-circle done">✓</div>
+          <div class="hg-progress-line done"></div>
+        </div>
+      </div>
+      <div class="hg-progress-step">
+        <div class="hg-progress-row">
+          <div class="hg-progress-circle current">2</div>
+          <div class="hg-progress-line"></div>
+        </div>
+      </div>
+      <div class="hg-progress-step">
+        <div class="hg-progress-row">
+          <div class="hg-progress-circle">3</div>
+        </div>
+      </div>
+    </div>
+    <div class="hg-progress-labels">
+      <div class="hg-progress-label">Explore</div>
+      <div class="hg-progress-label current">Apply</div>
+      <div class="hg-progress-label">Commit</div>
+    </div>
+    <div class="hg-progress-sublabel">
+      <span>11th Grade</span>
+      <span>11th–12th Grade</span>
+      <span>Senior Year</span>
+    </div>
+
     <div class="hg-job-card">
       <div class="hg-job-company">Raymond Corporation</div>
       <div class="hg-job-role">Mechanical Assembler</div>
       <div class="hg-job-meta">📍 Greene, NY</div>
       <div class="hg-job-pay">$22–$26/hr</div>
-      <div class="hg-job-type">Full-time · First shift available</div>
 
-      <div class="hg-skills-label">Skills required</div>
+      <div class="hg-fit-pills">
+        <span class="hg-fit-pill">🏛 Union position</span>
+        <span class="hg-fit-pill">🌙 First shift available</span>
+        <span class="hg-fit-pill">☀️ Paid time off + holidays</span>
+      </div>
+
+      <div class="hg-skills-label">Certifications required</div>
       <div class="hg-skills-grid">
         <div class="hg-skill-box hg-skill-green">✓ OSHA 10 Certification</div>
         <div class="hg-skill-box hg-skill-green">✓ Blueprint Reading</div>
-        <div class="hg-skill-box hg-skill-green">✓ Hand Tool Proficiency</div>
-        <div class="hg-skill-box hg-skill-gray" onclick="openTeacher('Industrial Wiring')">+ Industrial Wiring</div>
-        <div class="hg-skill-box hg-skill-gray" onclick="openTeacher('Hydraulic Systems')">+ Hydraulic Systems</div>
-        <div class="hg-skill-box hg-skill-gray" onclick="openTeacher('CNC Machine Operation')">+ CNC Machine Operation</div>
+        <div class="hg-skill-box hg-skill-green">✓ Hand Tool Safety</div>
+        <div class="hg-skill-box hg-skill-gray" onclick="openTeacher('IBEW Apprenticeship Application')">+ IBEW Apprenticeship Application</div>
+        <div class="hg-skill-box hg-skill-gray" onclick="openTeacher('Industrial Wiring Module 3')">+ Industrial Wiring Module 3</div>
+        <div class="hg-skill-box hg-skill-gray" onclick="openTeacher('Hydraulic Systems Certification')">+ Hydraulic Systems Certification</div>
       </div>
 
-      <button class="hg-apply-btn">Complete skills to apply</button>
-      <div class="hg-apply-note">You're missing 3 skills. Tap any gray skill to connect with an instructor.</div>
+      <button class="hg-apply-btn">Complete certifications to apply</button>
+      <div class="hg-apply-note">You're missing 3 certifications. Tap any gray box to connect with the instructor who can help you get it before graduation.</div>
     </div>
   </div>
 </div>
@@ -719,14 +849,14 @@
         <div class="hg-teacher-loc">DCMO BOCES · Norwich, NY</div>
       </div>
     </div>
-    <div class="hg-teacher-bio">20 years in industrial manufacturing before joining BOCES. I help students get hands-on experience before they enter the workforce.</div>
+    <div class="hg-teacher-bio">20 years in industrial manufacturing before joining BOCES. I help students get hands-on experience and prep for industry certifications before they enter the workforce — including IBEW applications, OSHA 10, and hydraulic systems training.</div>
     <div class="hg-teacher-pills">
-      <span class="hg-pill">12 yrs teaching</span>
-      <span class="hg-pill">OSHA Certified</span>
+      <span class="hg-pill">IBEW Certified</span>
+      <span class="hg-pill">OSHA Trainer</span>
       <span class="hg-pill">Open to students</span>
     </div>
     <div class="hg-message-label">Send a message</div>
-    <textarea class="hg-message-input" id="message-input" placeholder="Hi James, I'm a junior in the electrical program and I'd love to get some experience with industrial wiring — would you be open to a quick conversation?"></textarea>
+    <textarea class="hg-message-input" id="message-input" placeholder="Hi James, I'm a junior in the electrical program at DCMO BOCES and I'm missing the IBEW Apprenticeship Application requirement for the Raymond's role. Would you be open to helping me prep for that?"></textarea>
     <button class="hg-send-btn" id="send-btn" onclick="sendMessage()">Send message</button>
     <div class="hg-confirm-msg" id="send-confirm">Message sent! James typically replies within 24 hours.</div>
   </div>
