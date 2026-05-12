@@ -733,12 +733,12 @@
 </div>
 
 <script>
-  const supabase = window.supabase.createClient(
+  const _db = window.supabase.createClient(
     'https://mccrpgqtqtrxfifxvwbd.supabase.co',
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1jY3JwZ3F0cXRyeGZpZnh2d2JkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg1NTAwMDIsImV4cCI6MjA5NDEyNjAwMn0.iB3u2M7H0-D2Z2SbRQN0vHtOB62sASsGeF09FICzcc4'
   );
 
-  async function submitStudent() {
+  window.submitStudent = async function() {
     const name = document.getElementById('s-name').value.trim();
     const email = document.getElementById('s-email').value.trim();
     const program = document.getElementById('s-program').value.trim();
@@ -752,7 +752,7 @@
     }
     errEl.style.display = 'none';
 
-    const { error } = await supabase.from('students').insert([{ name, email, program, graduation_year }]);
+    const { error } = await _db.from('students').insert([{ name, email, program, graduation_year }]);
     if (error) {
       errEl.textContent = 'Something went wrong. Please try again.';
       errEl.style.display = 'block';
@@ -762,9 +762,9 @@
       s.textContent = "You're on the list! We'll be in touch when Homegrown launches in your area. 🌱";
       s.style.display = 'block';
     }
-  }
+  };
 
-  async function submitEmployer() {
+  window.submitEmployer = async function() {
     const company_name = document.getElementById('e-company').value.trim();
     const email = document.getElementById('e-email').value.trim();
     const county = document.getElementById('e-county').value.trim();
@@ -778,7 +778,7 @@
     }
     errEl.style.display = 'none';
 
-    const { error } = await supabase.from('employers').insert([{ company_name, email, county, industry }]);
+    const { error } = await _db.from('employers').insert([{ company_name, email, county, industry }]);
     if (error) {
       errEl.textContent = 'Something went wrong. Please try again.';
       errEl.style.display = 'block';
@@ -788,7 +788,7 @@
       s.textContent = "You're in! You'll be one of the first employers visible to local talent. We'll reach out soon. 🌱";
       s.style.display = 'block';
     }
-  }
+  };
 
   function openDemo() {
     document.getElementById('demo-overlay').classList.add('open');
