@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Homegrown.ai — Local talent. Local opportunity.</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -544,26 +545,34 @@
     </div>
 
     <div id="student-section">
-      <div class="hg-form">
-        <input type="text" placeholder="Full name" />
-        <input type="email" placeholder="Email address" />
-        <input type="text" placeholder="Your BOCES program (e.g. Electrical)" />
-        <input type="text" placeholder="Graduation year" />
+      <div id="student-form-wrap">
+        <div class="hg-form">
+          <input id="s-name" type="text" placeholder="Full name" />
+          <input id="s-email" type="email" placeholder="Email address" />
+          <input id="s-program" type="text" placeholder="Your BOCES program (e.g. Electrical)" />
+          <input id="s-year" type="text" placeholder="Graduation year" />
+        </div>
+        <div id="s-error" style="display:none;color:#c0392b;font-size:13px;margin-bottom:8px;"></div>
+        <button class="hg-btn-primary" onclick="submitStudent()">Create student account</button>
       </div>
-      <button class="hg-btn-primary">Create student account</button>
+      <div id="s-success" style="display:none;background:#EAF3DE;color:#3B6D11;border-radius:8px;padding:16px;font-size:14px;line-height:1.6;text-align:center;"></div>
       <div class="hg-divider">Already have an account?</div>
       <button class="hg-btn-secondary">Sign in</button>
       <button class="hg-demo-link" onclick="openDemo()">Try Demo</button>
     </div>
 
     <div id="employer-section" style="display:none;">
-      <div class="hg-form">
-        <input type="text" placeholder="Company name" />
-        <input type="email" placeholder="Work email" />
-        <input type="text" placeholder="County (e.g. Chenango)" />
-        <input type="text" placeholder="Industry (e.g. Manufacturing)" />
+      <div id="employer-form-wrap">
+        <div class="hg-form">
+          <input id="e-company" type="text" placeholder="Company name" />
+          <input id="e-email" type="email" placeholder="Work email" />
+          <input id="e-county" type="text" placeholder="County (e.g. Chenango)" />
+          <input id="e-industry" type="text" placeholder="Industry (e.g. Manufacturing)" />
+        </div>
+        <div id="e-error" style="display:none;color:#c0392b;font-size:13px;margin-bottom:8px;"></div>
+        <button class="hg-btn-primary" onclick="submitEmployer()">Get early employer access</button>
       </div>
-      <button class="hg-btn-primary">Get early employer access</button>
+      <div id="e-success" style="display:none;background:#EAF3DE;color:#3B6D11;border-radius:8px;padding:16px;font-size:14px;line-height:1.6;text-align:center;"></div>
       <div class="hg-divider">Already have an account?</div>
       <button class="hg-btn-secondary">Sign in</button>
       <button class="hg-demo-link" onclick="openDemo()">Try Demo</button>
@@ -724,6 +733,63 @@
 </div>
 
 <script>
+  const supabase = window.supabase.createClient(
+    'https://mccrpgqtqtrxfifxvwbd.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1jY3JwZ3F0cXRyeGZpZnh2d2JkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg1NTAwMDIsImV4cCI6MjA5NDEyNjAwMn0.iB3u2M7H0-D2Z2SbRQN0vHtOB62sASsGeF09FICzcc4'
+  );
+
+  async function submitStudent() {
+    const name = document.getElementById('s-name').value.trim();
+    const email = document.getElementById('s-email').value.trim();
+    const program = document.getElementById('s-program').value.trim();
+    const graduation_year = document.getElementById('s-year').value.trim();
+    const errEl = document.getElementById('s-error');
+
+    if (!name || !email || !program || !graduation_year) {
+      errEl.textContent = 'Please fill in all fields';
+      errEl.style.display = 'block';
+      return;
+    }
+    errEl.style.display = 'none';
+
+    const { error } = await supabase.from('students').insert([{ name, email, program, graduation_year }]);
+    if (error) {
+      errEl.textContent = 'Something went wrong. Please try again.';
+      errEl.style.display = 'block';
+    } else {
+      document.getElementById('student-form-wrap').style.display = 'none';
+      const s = document.getElementById('s-success');
+      s.textContent = "You're on the list! We'll be in touch when Homegrown launches in your area. 🌱";
+      s.style.display = 'block';
+    }
+  }
+
+  async function submitEmployer() {
+    const company_name = document.getElementById('e-company').value.trim();
+    const email = document.getElementById('e-email').value.trim();
+    const county = document.getElementById('e-county').value.trim();
+    const industry = document.getElementById('e-industry').value.trim();
+    const errEl = document.getElementById('e-error');
+
+    if (!company_name || !email || !county || !industry) {
+      errEl.textContent = 'Please fill in all fields';
+      errEl.style.display = 'block';
+      return;
+    }
+    errEl.style.display = 'none';
+
+    const { error } = await supabase.from('employers').insert([{ company_name, email, county, industry }]);
+    if (error) {
+      errEl.textContent = 'Something went wrong. Please try again.';
+      errEl.style.display = 'block';
+    } else {
+      document.getElementById('employer-form-wrap').style.display = 'none';
+      const s = document.getElementById('e-success');
+      s.textContent = "You're in! You'll be one of the first employers visible to local talent. We'll reach out soon. 🌱";
+      s.style.display = 'block';
+    }
+  }
+
   function openDemo() {
     document.getElementById('demo-overlay').classList.add('open');
   }
