@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Homegrown.ai — Local talent. Local opportunity.</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -1040,6 +1041,16 @@
             <div class="hg-chat-label">🌱 Homegrown</div>
             <div class="hg-chat-bubble">Done! 6 students have been notified. You'll see replies here when they respond.</div>
           </div>
+          <div class="hg-chat-msg employer hg-chat-hidden" data-chat="employer">
+            <div class="hg-chat-bubble">Show me hiring trends for mechanical assemblers in the last 6 months</div>
+          </div>
+          <div class="hg-chat-msg agent hg-chat-hidden" data-chat="agent">
+            <div class="hg-chat-label">🌱 Homegrown</div>
+            <div class="hg-chat-bubble" style="max-width:90%;">
+              <div style="margin-bottom:10px;line-height:1.5;">Demand for mechanical assemblers in Chenango County is up 34% since January. Local candidate supply has stayed flat. 8 students in relevant BOCES programs graduate in June — your earliest opportunity to close this gap.</div>
+              <canvas id="trend-chart" style="width:100%;max-width:280px;height:160px;"></canvas>
+            </div>
+          </div>
           <div class="hg-chat-msg agent" id="chat-typing" style="display:none;">
             <div class="hg-chat-label">🌱 Homegrown</div>
             <div class="hg-chat-bubble hg-typing-bubble"><span></span><span></span><span></span></div>
@@ -1189,6 +1200,7 @@
           requestAnimationFrame(() => requestAnimationFrame(() => {
             msg.classList.remove('hg-chat-showing');
             msg.classList.add('hg-chat-visible');
+            if (msg.querySelector('#trend-chart')) renderTrendChart();
           }));
           playSound('receive');
           modal.scrollTo({ top: modal.scrollHeight, behavior: 'smooth' });
@@ -1206,6 +1218,64 @@
         }, delay);
       }
       delay += isAgent ? 2200 : 1200;
+    });
+  }
+
+  function renderTrendChart() {
+    const canvas = document.getElementById('trend-chart');
+    if (!canvas || canvas._rendered) return;
+    canvas._rendered = true;
+    new Chart(canvas, {
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        datasets: [
+          {
+            type: 'bar',
+            label: 'Open Roles',
+            data: [4, 5, 6, 7, 8, 11],
+            backgroundColor: '#3B6D11',
+            borderRadius: 4,
+            order: 2
+          },
+          {
+            type: 'line',
+            label: 'Local Candidates',
+            data: [5, 5, 4, 5, 5, 5],
+            borderColor: '#999',
+            borderDash: [4, 4],
+            borderWidth: 2,
+            pointRadius: 2,
+            backgroundColor: 'transparent',
+            tension: 0.3,
+            order: 1
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: { font: { size: 10 }, boxWidth: 10, padding: 8 }
+          },
+          title: {
+            display: true,
+            text: 'Mechanical Assembler Demand vs. Supply · Chenango County',
+            font: { size: 10 },
+            color: '#666',
+            padding: { bottom: 8 }
+          }
+        },
+        scales: {
+          x: { grid: { display: false }, ticks: { font: { size: 10 } } },
+          y: {
+            min: 0, max: 12,
+            grid: { display: false },
+            ticks: { font: { size: 10 }, stepSize: 4, precision: 0 }
+          }
+        }
+      }
     });
   }
 
