@@ -702,13 +702,18 @@
       color: #1a1a1a;
     }
     .hg-chat-hidden {
-      opacity: 0;
-      transform: translateY(8px);
+      display: none;
     }
     .hg-chat-visible {
       opacity: 1;
       transform: translateY(0);
       transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .hg-chat-showing {
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      transform: translateY(8px);
     }
 
     .hg-typing-bubble {
@@ -1180,14 +1185,22 @@
         setTimeout(() => {
           typing.style.display = 'none';
           msg.classList.remove('hg-chat-hidden');
-          msg.classList.add('hg-chat-visible');
+          msg.classList.add('hg-chat-showing');
+          requestAnimationFrame(() => requestAnimationFrame(() => {
+            msg.classList.remove('hg-chat-showing');
+            msg.classList.add('hg-chat-visible');
+          }));
           playSound('receive');
           modal.scrollTo({ top: modal.scrollHeight, behavior: 'smooth' });
         }, delay);
       } else {
         setTimeout(() => {
           msg.classList.remove('hg-chat-hidden');
-          msg.classList.add('hg-chat-visible');
+          msg.classList.add('hg-chat-showing');
+          requestAnimationFrame(() => requestAnimationFrame(() => {
+            msg.classList.remove('hg-chat-showing');
+            msg.classList.add('hg-chat-visible');
+          }));
           playSound('send');
           modal.scrollTo({ top: modal.scrollHeight, behavior: 'smooth' });
         }, delay);
@@ -1226,8 +1239,8 @@
     document.getElementById('demo-overlay').classList.remove('open');
     // Reset chat so it animates again next open
     chatAnimated = false;
-    document.querySelectorAll('#demo-chat .hg-chat-visible').forEach(m => {
-      m.classList.remove('hg-chat-visible');
+    document.querySelectorAll('#demo-chat [data-chat]').forEach(m => {
+      m.classList.remove('hg-chat-visible', 'hg-chat-showing');
       m.classList.add('hg-chat-hidden');
     });
     document.getElementById('chat-typing').style.display = 'none';
