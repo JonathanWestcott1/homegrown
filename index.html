@@ -701,6 +701,36 @@
       outline: none;
       color: #1a1a1a;
     }
+    .hg-chat-hidden {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    .hg-chat-visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .hg-typing-bubble {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      padding: 12px 16px !important;
+    }
+    .hg-typing-bubble span {
+      width: 7px;
+      height: 7px;
+      background: #999;
+      border-radius: 50%;
+      animation: typingDot 1.2s infinite ease-in-out;
+    }
+    .hg-typing-bubble span:nth-child(2) { animation-delay: 0.2s; }
+    .hg-typing-bubble span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes typingDot {
+      0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+      30% { transform: translateY(-4px); opacity: 1; }
+    }
+
     .hg-chat-send {
       width: 36px;
       height: 36px;
@@ -983,27 +1013,31 @@
       <div class="hg-emp-section">
         <div class="hg-emp-section-title">Update Your Postings</div>
         <div class="hg-emp-section-sub">Just tell us what you need</div>
-        <div class="hg-chat">
-          <div class="hg-chat-msg employer">
+        <div class="hg-chat" id="demo-chat">
+          <div class="hg-chat-msg employer hg-chat-hidden" data-chat="employer">
             <div class="hg-chat-bubble">Update the pay on the mechanical assembler role to $26/hr</div>
           </div>
-          <div class="hg-chat-msg agent">
+          <div class="hg-chat-msg agent hg-chat-hidden" data-chat="agent">
             <div class="hg-chat-label">🌱 Homegrown</div>
             <div class="hg-chat-bubble">Done! Mechanical Assembler is now showing $26/hr. 3 more students just became eligible based on the new rate.</div>
           </div>
-          <div class="hg-chat-msg employer">
+          <div class="hg-chat-msg employer hg-chat-hidden" data-chat="employer">
             <div class="hg-chat-bubble">Which students are closest to qualifying for my electrician role?</div>
           </div>
-          <div class="hg-chat-msg agent">
+          <div class="hg-chat-msg agent hg-chat-hidden" data-chat="agent">
             <div class="hg-chat-label">🌱 Homegrown</div>
             <div class="hg-chat-bubble">6 students are 1 certification away from qualifying for your Maintenance Technician role. The most common missing cert is Hydraulic Systems. Want me to notify them about the opening?</div>
           </div>
-          <div class="hg-chat-msg employer">
+          <div class="hg-chat-msg employer hg-chat-hidden" data-chat="employer">
             <div class="hg-chat-bubble">Yes, send them a message</div>
           </div>
-          <div class="hg-chat-msg agent">
+          <div class="hg-chat-msg agent hg-chat-hidden" data-chat="agent">
             <div class="hg-chat-label">🌱 Homegrown</div>
             <div class="hg-chat-bubble">Done! 6 students have been notified. You'll see replies here when they respond.</div>
+          </div>
+          <div class="hg-chat-msg agent" id="chat-typing" style="display:none;">
+            <div class="hg-chat-label">🌱 Homegrown</div>
+            <div class="hg-chat-bubble hg-typing-bubble"><span></span><span></span><span></span></div>
           </div>
         </div>
         <div class="hg-chat-input-row">
@@ -1101,6 +1135,82 @@
     }
   };
 
+  // Web Audio sounds
+  function playSound(type) {
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      if (type === 'send') {
+        osc.frequency.setValueAtTime(880, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(1100, ctx.currentTime + 0.08);
+        gain.gain.setValueAtTime(0.15, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
+        osc.start(); osc.stop(ctx.currentTime + 0.15);
+      } else {
+        osc.frequency.setValueAtTime(620, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(820, ctx.currentTime + 0.1);
+        gain.gain.setValueAtTime(0.12, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.2);
+        osc.start(); osc.stop(ctx.currentTime + 0.2);
+      }
+    } catch(e) {}
+  }
+
+  // Chat animation sequence
+  let chatAnimated = false;
+  function animateChat() {
+    if (chatAnimated) return;
+    chatAnimated = true;
+    const messages = document.querySelectorAll('#demo-chat .hg-chat-hidden');
+    const typing = document.getElementById('chat-typing');
+    const modal = document.querySelector('.hg-modal');
+    let delay = 0;
+    messages.forEach((msg, i) => {
+      const isAgent = msg.dataset.chat === 'agent';
+      if (isAgent) {
+        // Show typing indicator before agent message
+        setTimeout(() => {
+          typing.style.display = 'flex';
+          modal.scrollTop = modal.scrollHeight;
+        }, delay);
+        delay += 1200;
+        setTimeout(() => {
+          typing.style.display = 'none';
+          msg.classList.remove('hg-chat-hidden');
+          msg.classList.add('hg-chat-visible');
+          playSound('receive');
+          modal.scrollTop = modal.scrollHeight;
+        }, delay);
+      } else {
+        setTimeout(() => {
+          msg.classList.remove('hg-chat-hidden');
+          msg.classList.add('hg-chat-visible');
+          playSound('send');
+          modal.scrollTop = modal.scrollHeight;
+        }, delay);
+      }
+      delay += isAgent ? 1800 : 1000;
+    });
+  }
+
+  // Trigger chat animation when chat scrolls into view inside the modal
+  function checkChatVisible() {
+    const chatEl = document.getElementById('demo-chat');
+    const modal = document.querySelector('.hg-modal');
+    if (!chatEl || !modal) return;
+    const chatRect = chatEl.getBoundingClientRect();
+    const modalRect = modal.getBoundingClientRect();
+    if (chatRect.top < modalRect.bottom - 60) {
+      animateChat();
+      modal.removeEventListener('scroll', checkChatVisible);
+    }
+  }
+
+  document.querySelector('.hg-modal').addEventListener('scroll', checkChatVisible);
+
   function switchDemoTab(tab) {
     document.getElementById('demo-student').style.display = tab === 'student' ? 'block' : 'none';
     document.getElementById('demo-employer').style.display = tab === 'employer' ? 'block' : 'none';
@@ -1114,6 +1224,15 @@
 
   function closeDemo() {
     document.getElementById('demo-overlay').classList.remove('open');
+    // Reset chat so it animates again next open
+    chatAnimated = false;
+    document.querySelectorAll('#demo-chat .hg-chat-visible').forEach(m => {
+      m.classList.remove('hg-chat-visible');
+      m.classList.add('hg-chat-hidden');
+    });
+    document.getElementById('chat-typing').style.display = 'none';
+    document.querySelector('.hg-modal').scrollTop = 0;
+    document.querySelector('.hg-modal').addEventListener('scroll', checkChatVisible);
   }
 
   function openTeacher(skill) {
