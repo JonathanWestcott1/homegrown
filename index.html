@@ -590,6 +590,131 @@
       color: #bbb;
     }
 
+    /* Demo tab switcher */
+    .hg-demo-tabs {
+      display: flex;
+      background: #f5f5f5;
+      border-radius: 12px;
+      padding: 4px;
+      margin: 12px 20px 0;
+      border: 0.5px solid #e5e5e5;
+    }
+    .hg-demo-tab {
+      flex: 1;
+      padding: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      border: none;
+      background: transparent;
+      color: #999;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.15s;
+    }
+    .hg-demo-tab.active {
+      background: #ffffff;
+      color: #1a1a1a;
+      border: 0.5px solid #ddd;
+    }
+
+    /* Employer demo sections */
+    .hg-emp-section { padding: 20px 20px 0; }
+    .hg-emp-section + .hg-emp-section { border-top: 0.5px solid #e5e5e5; margin-top: 20px; padding-top: 20px; }
+    .hg-emp-section-title { font-size: 16px; font-weight: 500; color: #1a1a1a; letter-spacing: -0.3px; margin-bottom: 2px; }
+    .hg-emp-section-sub { font-size: 12px; color: #999; margin-bottom: 14px; }
+
+    .hg-posting-card {
+      border: 0.5px solid #e5e5e5;
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 10px;
+      background: #fff;
+    }
+    .hg-posting-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px; }
+    .hg-posting-role { font-size: 16px; font-weight: 500; color: #1a1a1a; }
+    .hg-posting-status { font-size: 11px; font-weight: 500; color: #3B6D11; background: #EAF3DE; padding: 3px 8px; border-radius: 20px; }
+    .hg-posting-pay { font-size: 13px; color: #666; margin-bottom: 8px; }
+    .hg-posting-stats { font-size: 12px; color: #999; }
+
+    .hg-pipeline-box {
+      background: #f5f5f5;
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+    .hg-pipeline-intro { font-size: 13px; color: #1a1a1a; margin-bottom: 12px; }
+    .hg-pipeline-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-top: 0.5px solid #e5e5e5;
+      font-size: 13px;
+    }
+    .hg-pipeline-row-left { color: #1a1a1a; }
+    .hg-pipeline-row-count { color: #999; font-size: 12px; }
+    .hg-pipeline-row-cert { color: #3B6D11; font-size: 12px; font-weight: 500; }
+    .hg-pipeline-btn {
+      width: 100%;
+      padding: 12px;
+      font-size: 14px;
+      font-weight: 500;
+      background: transparent;
+      color: #3B6D11;
+      border: 1.5px solid #3B6D11;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: inherit;
+      margin-top: 4px;
+    }
+
+    /* Chat UI */
+    .hg-chat { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
+    .hg-chat-msg { display: flex; flex-direction: column; max-width: 80%; }
+    .hg-chat-msg.employer { align-self: flex-end; align-items: flex-end; }
+    .hg-chat-msg.agent { align-self: flex-start; align-items: flex-start; }
+    .hg-chat-label { font-size: 10px; color: #999; margin-bottom: 3px; }
+    .hg-chat-bubble {
+      padding: 10px 14px;
+      border-radius: 18px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .hg-chat-msg.employer .hg-chat-bubble { background: #3B6D11; color: #fff; border-bottom-right-radius: 4px; }
+    .hg-chat-msg.agent .hg-chat-bubble { background: #f5f5f5; color: #1a1a1a; border-bottom-left-radius: 4px; }
+    .hg-chat-input-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      border-top: 0.5px solid #e5e5e5;
+      padding-top: 12px;
+      margin-bottom: 20px;
+    }
+    .hg-chat-input {
+      flex: 1;
+      padding: 10px 14px;
+      font-size: 14px;
+      border: 0.5px solid #ddd;
+      border-radius: 20px;
+      font-family: inherit;
+      outline: none;
+      color: #1a1a1a;
+    }
+    .hg-chat-send {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #3B6D11;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
     /* Signing day banner */
     .hg-signing-banner {
       margin: 0 20px 12px;
@@ -766,34 +891,127 @@
       <button class="hg-modal-back" onclick="closeDemo()">←</button>
       <div class="hg-logo">home<span style="color:#3B6D11">grown</span>.ai</div>
     </div>
-    <div class="hg-modal-header">
-      <div class="hg-modal-title">Available in your area</div>
+
+    <div class="hg-demo-tabs">
+      <button class="hg-demo-tab active" id="demo-tab-student" onclick="switchDemoTab('student')">Student</button>
+      <button class="hg-demo-tab" id="demo-tab-employer" onclick="switchDemoTab('employer')">Employer</button>
     </div>
 
-    <div class="hg-job-card">
-      <div class="hg-job-company">Raymond Corporation</div>
-      <div class="hg-job-role">Mechanical Assembler</div>
-      <div class="hg-job-meta">📍 Greene, NY</div>
-      <div class="hg-job-pay">$22–$26/hr</div>
+    <!-- Student demo -->
+    <div id="demo-student">
+      <div class="hg-modal-header">
+        <div class="hg-modal-title">Available in your area</div>
+      </div>
+      <div class="hg-job-card">
+        <div class="hg-job-company">Raymond Corporation</div>
+        <div class="hg-job-role">Mechanical Assembler</div>
+        <div class="hg-job-meta">📍 Greene, NY</div>
+        <div class="hg-job-pay">$22–$26/hr</div>
+        <div class="hg-fit-pills">
+          <span class="hg-fit-pill">🏛 Union position</span>
+          <span class="hg-fit-pill">🌙 First shift available</span>
+          <span class="hg-fit-pill">☀️ Paid time off + holidays</span>
+        </div>
+        <div class="hg-skills-label">Certifications required</div>
+        <div class="hg-skills-grid">
+          <div class="hg-skill-box hg-skill-green">✓ OSHA 10 Certification</div>
+          <div class="hg-skill-box hg-skill-green">✓ Blueprint Reading</div>
+          <div class="hg-skill-box hg-skill-green">✓ Hand Tool Safety</div>
+          <div class="hg-skill-box hg-skill-gray" onclick="openTeacher('IBEW Apprenticeship Application')">+ IBEW Apprenticeship Application</div>
+          <div class="hg-skill-box hg-skill-gray" onclick="openTeacher('Industrial Wiring Module 3')">+ Industrial Wiring Module 3</div>
+          <div class="hg-skill-box hg-skill-gray" onclick="openTeacher('Hydraulic Systems Certification')">+ Hydraulic Systems Certification</div>
+        </div>
+        <button class="hg-apply-btn">Complete certifications to apply</button>
+        <div class="hg-apply-note">You're missing 3 certifications. Tap any gray box to connect with the instructor who can help you get it before graduation.</div>
+      </div>
+    </div>
 
-      <div class="hg-fit-pills">
-        <span class="hg-fit-pill">🏛 Union position</span>
-        <span class="hg-fit-pill">🌙 First shift available</span>
-        <span class="hg-fit-pill">☀️ Paid time off + holidays</span>
+    <!-- Employer demo -->
+    <div id="demo-employer" style="display:none; padding-bottom: 20px;">
+
+      <div class="hg-emp-section">
+        <div class="hg-emp-section-title">My Jobs</div>
+        <div class="hg-emp-section-sub">2 active postings</div>
+        <div class="hg-posting-card">
+          <div class="hg-posting-header">
+            <div class="hg-posting-role">Mechanical Assembler</div>
+            <span class="hg-posting-status">Open</span>
+          </div>
+          <div class="hg-posting-pay">$22–$26/hr · First shift</div>
+          <div class="hg-posting-stats">👁 34 students viewed · ✓ 8 qualified · ◎ 6 close</div>
+        </div>
+        <div class="hg-posting-card">
+          <div class="hg-posting-header">
+            <div class="hg-posting-role">Maintenance Technician</div>
+            <span class="hg-posting-status">Open</span>
+          </div>
+          <div class="hg-posting-pay">$24–$28/hr · Rotating shifts</div>
+          <div class="hg-posting-stats">👁 19 students viewed · ✓ 3 qualified · ◎ 4 close</div>
+        </div>
       </div>
 
-      <div class="hg-skills-label">Certifications required</div>
-      <div class="hg-skills-grid">
-        <div class="hg-skill-box hg-skill-green">✓ OSHA 10 Certification</div>
-        <div class="hg-skill-box hg-skill-green">✓ Blueprint Reading</div>
-        <div class="hg-skill-box hg-skill-green">✓ Hand Tool Safety</div>
-        <div class="hg-skill-box hg-skill-gray" onclick="openTeacher('IBEW Apprenticeship Application')">+ IBEW Apprenticeship Application</div>
-        <div class="hg-skill-box hg-skill-gray" onclick="openTeacher('Industrial Wiring Module 3')">+ Industrial Wiring Module 3</div>
-        <div class="hg-skill-box hg-skill-gray" onclick="openTeacher('Hydraulic Systems Certification')">+ Hydraulic Systems Certification</div>
+      <div class="hg-emp-section">
+        <div class="hg-emp-section-title">Local Talent Pipeline</div>
+        <div class="hg-emp-section-sub">Chenango County · Class of 2026</div>
+        <div class="hg-pipeline-box">
+          <div class="hg-pipeline-intro">🎓 23 students graduating this June from relevant BOCES programs</div>
+          <div class="hg-pipeline-row">
+            <div>
+              <div class="hg-pipeline-row-left">Electrical Program</div>
+              <div class="hg-pipeline-row-count">8 students</div>
+            </div>
+            <div class="hg-pipeline-row-cert">6 OSHA certified</div>
+          </div>
+          <div class="hg-pipeline-row">
+            <div>
+              <div class="hg-pipeline-row-left">Mechanical/Manufacturing</div>
+              <div class="hg-pipeline-row-count">9 students</div>
+            </div>
+            <div class="hg-pipeline-row-cert">4 blueprint certified</div>
+          </div>
+          <div class="hg-pipeline-row">
+            <div>
+              <div class="hg-pipeline-row-left">Carpentry & Construction</div>
+              <div class="hg-pipeline-row-count">6 students</div>
+            </div>
+            <div class="hg-pipeline-row-cert">All have hand tool safety</div>
+          </div>
+        </div>
+        <button class="hg-pipeline-btn" onclick="alert('This feature lets you send a message to all qualifying students in a program. Coming soon in the full version.')">Message this cohort →</button>
       </div>
 
-      <button class="hg-apply-btn">Complete certifications to apply</button>
-      <div class="hg-apply-note">You're missing 3 certifications. Tap any gray box to connect with the instructor who can help you get it before graduation.</div>
+      <div class="hg-emp-section">
+        <div class="hg-emp-section-title">Update Your Postings</div>
+        <div class="hg-emp-section-sub">Just tell us what you need</div>
+        <div class="hg-chat">
+          <div class="hg-chat-msg employer">
+            <div class="hg-chat-bubble">Update the pay on the mechanical assembler role to $26/hr</div>
+          </div>
+          <div class="hg-chat-msg agent">
+            <div class="hg-chat-label">🌱 Homegrown</div>
+            <div class="hg-chat-bubble">Done! Mechanical Assembler is now showing $26/hr. 3 more students just became eligible based on the new rate.</div>
+          </div>
+          <div class="hg-chat-msg employer">
+            <div class="hg-chat-bubble">Which students are closest to qualifying for my electrician role?</div>
+          </div>
+          <div class="hg-chat-msg agent">
+            <div class="hg-chat-label">🌱 Homegrown</div>
+            <div class="hg-chat-bubble">6 students are 1 certification away from qualifying for your Maintenance Technician role. The most common missing cert is Hydraulic Systems. Want me to notify them about the opening?</div>
+          </div>
+          <div class="hg-chat-msg employer">
+            <div class="hg-chat-bubble">Yes, send them a message</div>
+          </div>
+          <div class="hg-chat-msg agent">
+            <div class="hg-chat-label">🌱 Homegrown</div>
+            <div class="hg-chat-bubble">Done! 6 students have been notified. You'll see replies here when they respond.</div>
+          </div>
+        </div>
+        <div class="hg-chat-input-row">
+          <input class="hg-chat-input" type="text" placeholder="Message Homegrown..." />
+          <button class="hg-chat-send">↑</button>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -882,6 +1100,13 @@
       s.style.display = 'block';
     }
   };
+
+  function switchDemoTab(tab) {
+    document.getElementById('demo-student').style.display = tab === 'student' ? 'block' : 'none';
+    document.getElementById('demo-employer').style.display = tab === 'employer' ? 'block' : 'none';
+    document.getElementById('demo-tab-student').classList.toggle('active', tab === 'student');
+    document.getElementById('demo-tab-employer').classList.toggle('active', tab === 'employer');
+  }
 
   function openDemo() {
     document.getElementById('demo-overlay').classList.add('open');
