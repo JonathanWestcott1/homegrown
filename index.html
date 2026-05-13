@@ -1174,7 +1174,7 @@
         // Show typing indicator before agent message
         setTimeout(() => {
           typing.style.display = 'flex';
-          modal.scrollTop = modal.scrollHeight;
+          modal.scrollTo({ top: modal.scrollHeight, behavior: 'smooth' });
         }, delay);
         delay += 2800;
         setTimeout(() => {
@@ -1182,14 +1182,14 @@
           msg.classList.remove('hg-chat-hidden');
           msg.classList.add('hg-chat-visible');
           playSound('receive');
-          modal.scrollTop = modal.scrollHeight;
+          modal.scrollTo({ top: modal.scrollHeight, behavior: 'smooth' });
         }, delay);
       } else {
         setTimeout(() => {
           msg.classList.remove('hg-chat-hidden');
           msg.classList.add('hg-chat-visible');
           playSound('send');
-          modal.scrollTop = modal.scrollHeight;
+          modal.scrollTo({ top: modal.scrollHeight, behavior: 'smooth' });
         }, delay);
       }
       delay += isAgent ? 2200 : 1200;
